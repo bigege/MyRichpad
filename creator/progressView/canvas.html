@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas</title>
+	<script src="js/excanvas.js"></script>
+</head>
+<body>
+	<canvas class="process" width="500" height="500" data-process="90"></canvas>
+	<script>
+	    
+      window.onload=function(){
+        var c=document.getElementsByClassName('process');
+        var cxt=c.getContext('2d');
+        var process=c.getAttribute('data-process');
+        // 绘制圆
+        cxt.beginPath();
+        cxt.moveTo(45,45);
+        cxt.arc(45,45,40,Math.PI*0.75,Math.PI*2.25,false);
+        //设置圆心为（100，100），半径80，起始角度0（表示3点钟方向），结束角度Math.PI*2(满圆，Math.PI返回圆周率)；
+        cxt.closePath();
+        cxt.fillStyle="#fceec4";
+        cxt.fill();
+        // 绘制进度条
+        cxt.beginPath();
+        cxt.moveTo(45,45);
+        cxt.arc(45,45,40,Math.PI*0.75,Math.PI*(0.75+1.5*process/100),false);
+        cxt.closePath();
+        cxt.fillStyle="#e68f26";
+        cxt.fill();
+        // 画内填充元圆
+        cxt.beginPath();
+        cxt.arc(45,45,33,0,Math.PI*2,true);
+        cxt.closePath();
+        cxt.fillStyle="#fff";
+        cxt.fill();
+        // 填充文字
+        cxt.font="16px Microsoft YaHei";
+        cxt.fillStyle="#e68f26";
+        cxt.textAlign="center";
+        cxt.textBaseline="middle";
+        cxt.moveTo(45,45);
+        cxt.fillText("已投",45,35);
+        cxt.fillText(process+"%",45,55);
+
+        // 绘制第二个圆
+        cxt.beginPath();
+        cxt.arc(145,45,36.5,Math.PI*0.75,Math.PI*2.25,false);
+        cxt.lineWidth="7";
+        cxt.strokeStyle="#fceec4";
+        cxt.lineCap="round";
+        cxt.stroke();
+        cxt.closePath();
+
+
+        cxt.beginPath();
+        cxt.arc(145,45,36.5,Math.PI*0.75,Math.PI*(0.75+1.5*process/100),false);
+        cxt.strokeStyle="#e68f26";
+        cxt.lineCap="round";
+        cxt.stroke();
+        cxt.closePath();
+      }
+        
+	     
+	</script>
+</body>
+</html>

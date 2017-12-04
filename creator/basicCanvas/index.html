@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Canvas练习</title>
+    <style>
+        body{
+            background-color: #fffdef;
+        }
+        #canvas{
+            border: 1px solid #aaaaaa;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-wrap">
+        <canvas id="canvas" width="800" height="600"></canvas>
+    </div>
+    <script>
+        window.onload=function(){
+            var canvas=document.getElementById('canvas');
+            var context=canvas.getContext('2d');
+            //绘制矩形
+            context.fillRect(25,25,100,100);
+            context.clearRect(45,45,60,60);
+            context.strokeRect(50,50,50,50);
+            //绘制路径
+            context.beginPath();
+            context.moveTo(125,75);
+            context.lineTo(175,25);
+            context.lineTo(175,125);
+            context.fill();
+            context.closePath();
+            //绘制圆形
+            context.beginPath();
+            context.arc(275,75,45,0,Math.PI*2);
+            context.stroke();
+            context.closePath();
+
+            context.beginPath();
+            context.arc(275,75,28,Math.PI*0.15,Math.PI*0.85,false);
+            context.stroke();
+            context.closePath();
+
+            context.beginPath();
+            context.arc(260,65,10,Math.PI*1,Math.PI*2,false);
+            context.stroke();
+            context.closePath();
+
+            context.beginPath();
+            context.arc(290,65,10,Math.PI*1,Math.PI*2,false);
+            context.stroke();
+            context.closePath();
+            //第二个脸
+            context.beginPath();
+            context.arc(375,75,45,0,Math.PI*2);
+            context.lineWidth="4";
+            context.stroke();
+            context.closePath();
+
+            context.beginPath();
+            context.arc(375,75,30,Math.PI*0.1,Math.PI*0.9,false);
+            context.closePath();
+            context.stroke();
+            
+            context.beginPath();
+            context.arc(360,60,9,0,Math.PI*2,false);
+            context.fill();
+            
+            context.beginPath();
+            context.arc(390,60,9,0,Math.PI*2,false);
+            context.fill();
+            context.closePath();
+            
+            //二次贝塞尔曲线
+            context.beginPath();
+            context.lineWidth="1";
+            context.moveTo(500,25);
+            context.quadraticCurveTo(450,25,450,62.5);
+            context.quadraticCurveTo(450,100,475,100);
+            context.quadraticCurveTo(475,120,450,125);
+            context.quadraticCurveTo(485,120,485,100);
+            context.quadraticCurveTo(550,100,550,62.5);
+            context.quadraticCurveTo(550,25,500,25);
+            context.stroke();
+
+            context.strokeStyle="#e68f26";
+            context.font="14px  Microsoft YaHei";
+            context.textAlign="center";
+            context.Baseline="middle";
+            context.moveTo(550,62.5);
+            context.strokeText("这个对话框",500,58);
+            context.strokeText("好丑！！！",500,80);
+
+            //三次贝塞尔曲线
+            context.beginPath();
+            context.lineWidth="2";
+            context.moveTo(675,50);
+            context.bezierCurveTo(650,25,625,55,650,75);
+            context.lineTo(675,100);
+            context.lineTo(700,75);
+            context.bezierCurveTo(725,55,700,25,675,50);
+            context.moveTo(643,49);
+            context.lineTo(637,43);
+            context.lineTo(633,47);
+            context.lineTo(629,37);
+            context.lineTo(641,39);
+            context.lineTo(637,43);
+
+            context.moveTo(675,75);
+            context.lineTo(691,91);
+            context.lineTo(698,90);
+            context.lineTo(709,99);
+            context.lineTo(701,99);
+            context.lineTo(701,105);
+            context.lineTo(692,97);
+            context.lineTo(691,91);
+            context.stroke();
+
+            //圆角矩形
+            // context.strokeStyle="black";
+            // context.beginPath();
+            // context.moveTo(25,150);
+            // context.lineTo(25,450);
+            // context.lineTo(775,450);
+            // context.lineTo(775,150);
+            // context.lineTo(25,150);
+            // context.stroke();
+            // context.closePath();
+            roundedRect(context,25,150,750,300,15);
+            roundedRect(context,35,160,730,280,10);
+            // roundedRect(context,212.5,225,375,150,10);
+            roundedRect(context,293.75,262.5,187.5,75,10);
+            roundedRect(context,80,200,100,50,10);
+            roundedRect(context,530,200,190,130,10);
+            roundedRect(context,230,160,13,230,0);
+            roundedRect(context,80,290,100,100,10);
+            roundedRect(context,340,160,100,60,0);
+            roundedRect(context,340,380,100,60,0);
+            roundedRect(context,500,380,215,10,5);
+
+            //Pac-Man
+            context.beginPath();
+            context.arc(62,180,16,Math.PI/7,-Math.PI/7,false);
+            context.lineTo(56,180);
+            context.fill();
+            //Peas
+            crossPeas(context,90,178,8);
+            verticalpeas(context,202,196,14);
+            crossPeas(context,60,412,9);
+            verticalpeas(context,60,204,13);
+            crossPeas(context,75,268,8);
+            crossPeas(context,218,412,7);
+            verticalpeas(context,266,188,14);
+            verticalpeas(context,314,188,4);
+            crossPeas(context,266,188,3);
+            verticalpeas(context,314,364,3);
+            crossPeas(context,320,358,27);
+            crossPeas(context,321,241,13);
+            verticalpeas(context,468,368,4);
+            verticalpeas(context,481,178,4);
+            verticalpeas(context,505,260,6);
+            crossPeas(context,497,178,16);
+            crossPeas(context,481,416,17);
+            verticalpeas(context,737,196,10);
+            verticalpeas(context,736,380,2);
+            //Blinky 红色的鬼魂。他会直直朝吃豆人的位置前进，并且会随着豆子数量减少而加速。
+            context.fillStyle="red";
+            context.beginPath();
+            context.moveTo(370,295);
+            context.lineTo(370,325);
+            context.lineTo(377,315);
+            context.lineTo(384,325);
+            context.lineTo(391,315);
+            context.lineTo(398,325);
+            context.lineTo(405,315);
+            context.lineTo(412,325);
+            context.lineTo(412,295);
+            context.bezierCurveTo(406,275,376,275,370,295)
+            context.fill();
+
+            context.fillStyle="white";
+            context.beginPath();
+            context.moveTo(374,300);
+            context.bezierCurveTo(377,290,386,290,389,300);
+            context.bezierCurveTo(386,310,377,310,374,300);
+            context.fill();
+            context.beginPath();
+            context.moveTo(393,300);
+            context.bezierCurveTo(396,290,405,290,408,300);
+            context.bezierCurveTo(405,310,396,310,393,300);
+            context.fill();
+
+            context.fillStyle="#000";
+            context.beginPath();
+            context.arc(378,302,3,0,Math.PI*2);
+            context.fill();
+            context.beginPath();
+            context.arc(397,302,3,0,Math.PI*2);
+            context.fill();
+            //Pinky 粉红色的鬼魂。他会瞄准吃豆人移动位置的前四格推进，试图伏击玩家。
+            //Inky 浅蓝色的鬼魂。他是行动最复杂的鬼魂，他会求得Blinky和吃豆人之间的向量，设计一个有效的陷阱来夹击玩家。
+            //Clyde 橘色的鬼魂。他会朝吃豆人的位置前进，但直到他接近吃豆人时，他会撤退回到属于他的迷宫角落。
+
+            //fillStyle()
+            for(var i=0;i<10;i++){
+                for(var j=0;j<10;j++){
+                    context.fillStyle='rgb('+Math.floor(225-14.5*i)+','+Math.floor(225-14.5*j)+',0)';
+                    context.fillRect(25+10*i,475+10*j,10,10);
+                }
+            }
+            //strokeStyle()
+            for(var i=0;i<5;i++){
+                for(var j=0;j<5;j++){
+                    context.strokeStyle='rgb('+Math.floor(225-30.5*i)+','+Math.floor(225-30.5*j)+',0)';
+                    context.beginPath();
+                    context.arc(150+25*i,475+25*j,10,0,Math.PI*2);
+                    context.stroke();
+                }
+            }
+
+            //globalAlpha
+            //设置背景
+            context.fillStyle = '#FD0';
+            context.fillRect(290,475,50,50);
+            context.fillStyle = '#6C0';
+            context.fillRect(340,475,50,50);
+            context.fillStyle = '#09F';
+            context.fillRect(290,525,50,50);
+            context.fillStyle = '#F30';
+            context.fillRect(340,525,50,50);
+            context.fillStyle = '#FFF';
+            //设置透明度
+            context.globalAlpha=0.3;
+            //画半透明圆
+            for(var i=0;i<7;i++){
+                context.beginPath();
+                context.arc(340,525,10+5*i,0,Math.PI*2);
+                context.fill();
+            }
+
+
+            //渐变
+            // var radgrad=context.createRadialGradient(430,475,10,437,480,40);
+            // radgrad.addColorStop(0, '#A7D30C');
+            // radgrad.addColorStop(0.9, '#019F62');
+            // radgrad.addColorStop(1, 'rgba(1,159,98,0)');
+            // context.fillStyle=radgrad;
+            // context.fillRect(430,475,150,150);
+
+            //图案
+            //创建image对象用做图案
+            // var img =new Image();
+            // img.src="images/dog.jpg";
+            // img.onload=function(){
+            //     //创建图案
+            //     var ptrn=context.createPattern(img,'repeat');
+            //     context.fillStyle=ptrn;
+            //     context.fillRect(430,475,100,100);
+            // }
+
+
+            //save  restore
+            context.fillStyle="#000";
+            context.fillRect(420,475,100,100);
+            context.save(); //保存当前初始状态
+
+            context.fillStyle="#09f";
+            context.globalAlpha=1;
+            context.fillRect(430,485,80,80);//在新的设置上绘制一个新矩形
+            context.save();
+
+            context.fillStyle="#fff";
+            context.globalAlpha=0.5;
+            context.fillRect(440,495,60,60);
+            // context.save();
+
+            context.restore();//重新加载之前的配置
+            context.fillRect(450,505,40,40);
+
+            context.restore();//加载默认的配置绘制
+            context.fillRect(460,515,20,20);
+
+
+        }
+      
+            //封装一个用于绘制圆角矩形的函数
+        function roundedRect(context,x,y,width,height,radius){
+            context.strokeStyle="#666";
+            context.lineWidth=1;
+            context.beginPath();
+            context.moveTo(x,y+radius);
+            context.lineTo(x,y+height-radius);
+            context.quadraticCurveTo(x,y+height,x+radius,y+height);
+            context.lineTo(x+width-radius,y+height);
+            context.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);
+            context.lineTo(x+width,y+radius);
+            context.quadraticCurveTo(x+width,y,x+width-radius,y);
+            context.lineTo(x+radius,y);
+            context.quadraticCurveTo(x,y,x,y+radius);
+            context.stroke();
+        }
+        //绘制全图的豆豆
+        function crossPeas(context,x,y,j){
+            for(var i=0;i<j;i++){
+                context.fillRect(x+i*16,y,4,4);
+            }
+        }
+        function verticalpeas(context,x,y,j){
+            for(var i=0;i<j;i++){
+                context.fillRect(x,y+i*16,4,4);
+            }
+        }
+    </script>
+</body>
+</html>

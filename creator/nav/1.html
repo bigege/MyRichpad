@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>导航栏</title>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<style type="text/css">
+	    ul{
+	    	margin: auto;
+	    	width: 1024px;
+	    	list-style: none;
+
+	    }
+	    li{
+	    	list-style-type: none;
+	    }
+	    ul li{
+	    	float: left;
+	    	padding: 0 15px 0 15px;
+	    }
+	    ul li a{
+	    	text-decoration: none;
+	    	color: #333;
+	    	display: block;
+	    	width: 150px;
+	    	text-align: center;
+	    	line-height: 40px;
+	    	
+	    }
+	    #nav li a{
+	    	transition-duration:.3s;  
+	    }
+	    #nav li a.current{
+	    	background: url(nav_cur_red.png) repeat-x bottom;
+	    }
+	    #nav li a:hover{
+	    	color: #fff;
+	    	background:red; 
+	    }
+
+	    #secNav{
+	    	position:relative;
+	    	top: 150px;
+	    	height: 45px;
+            line-height: 45px;
+            clear:both;
+	    }
+	    #magic-line{
+	    	position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: #9b0000;
+            padding: 0;
+	    }
+	     #secNav2{
+	    	position:relative;
+	    	top: 300px;
+	    	height: 45px;
+            line-height: 45px;
+            clear:both;
+	    }
+	    #magic-line2{
+	    	position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: #9b0000;
+            padding: 0;
+	    }
+	</style>
+</head>
+<body>
+   
+       <ul id="nav">
+           <li><a href="#" class="current">校园生活</a></li>
+           <li><a href="#">合作交流</a></li>
+           <li><a href="#">科学研究</a></li>
+           <li><a href="#">教育教学</a></li>
+       </ul>
+
+       <section id="secNav">
+            <ul>
+               <li class="cur"><a href="#">绿色校园</a></li>
+               <li ><a href="#">信息公开</a></li>
+               <li><a href="#">组织结构</a></li>
+               <li><a href="#">历史名人</a></li>
+            </ul>
+       </section>
+
+       <section id="secNav2">
+            <ul>
+               <li  class="cur2"><a href="#">绿色校园</a></li>
+               <li><a href="#">信息公开</a></li>
+               <li><a href="#">组织结构</a></li>
+               <li><a href="#">历史名人</a></li>
+            </ul>
+       </section>
+       <script type="text/javascript">
+           function addElementLi(){
+           	    var secNav = document.getElementsByTagName("section");
+           	    var li = document.createElement("li");
+           	    var a = document.querySelector("#secNav .cur a");
+           	    var left = a.offsetLeft;
+				var liLeft = left;  //红色条的left
+				var clear2 = undefined; //滑回去的定时器
+				var intervalID2 = undefined;
+           	    // var left = window.getComputedStyle(a,null).getPropertyValue("left")
+           	    var cur = document.querySelector("#secNav .cur");
+           	    var width = window.getComputedStyle(cur,null).getPropertyValue("width")
+           	    // console.log(width)
+           	    // console.log("left=====" + left);
+           	    li.setAttribute("id","magic-line");
+           	    li.style.left = left + "px";
+           	    li.style.width = width;
+           	    secNav[0].appendChild(li);
+           	    // console.log(document.querySelectorAll("#secNav li a"));
+           	    let lia = document.querySelectorAll("#secNav li a");
+           	    lia.forEach(function(element){
+           	    	// console.log(element);
+           	    	element.onmouseover = function(){
+           	    	    let that = this;
+           	    	    leftPos = that.offsetLeft;
+           	    	    // console.log(leftPos);
+           	    	    newWidth = window.getComputedStyle(that.parentNode,null).getPropertyValue("width");
+           	    	    // console.log(newWidth);
+           	    	    if(liLeft <= leftPos){
+           	    	    	function Forward(){
+							    clearInterval( clear2 );
+                                liLeft = liLeft + 5;
+                                if(liLeft >= leftPos){
+                            	    clearInterval(intervalID);
+                                }
+                                li.style.left = liLeft + "px";
+                            }
+                            var subFor = Number(leftPos - liLeft);
+                            if(0 < subFor && subFor <= 200){
+                        	    intervalID  = setInterval(Forward,15);   
+                            }else if(200 < subFor && subFor  <= 400){
+                        	    intervalID  = setInterval(Forward,9) ;
+                            }else{
+                        	    intervalID  = setInterval(Forward,3); 
+                            }
+           	    	    }else{
+           	    	    	console.log("left222=="+left);
+						    console.log("lliLeft222==="+liLeft);
+                            console.log("leftPos222==="+leftPos);
+                            function goBack(){
+							    clearInterval( clear2 );
+                                liLeft = liLeft - 5;
+                                if(liLeft <= leftPos){
+                            	    clearInterval(intervalID2);
+                                }
+                                li.style.left = liLeft + "px";
+                            }
+                            var subBack = Number(liLeft - leftPos);
+                            if(0 < subBack && subBack <= 180){
+                        	    console.log("111");
+                        	    intervalID2  = setInterval(goBack,15); 
+                            }else if(180 < subBack && subBack  <= 360){
+                        	    console.log("222");
+                        	    intervalID2  = setInterval(goBack,9); 
+                            }else{
+                        	    console.log("333");
+                        	    intervalID2  = setInterval(goBack,3); 
+                            }
+           	    	    }
+           	    	    
+                        
+					}
+					   
+           	        element.onmouseout = function(){
+						clearInterval(intervalID);
+						clearInterval(intervalID2);
+						//往回滑
+						// console.log("left33333=="+left);
+						// console.log("lliLeft33333==="+liLeft);
+      //                   console.log("leftPos33333==="+leftPos);
+						function backtrac(){
+                            liLeft = liLeft - 5;
+                            if(liLeft <= left){
+                            	clearInterval(clear2);
+                            }
+                            li.style.left = liLeft + "px";
+                        }
+                        // console.log("leftPos-left==" + Number(leftPos - left));
+                        var subBack = Number(leftPos - left);
+                        if(0 < subBack && subBack <= 180){
+                        	clear2 = setInterval(backtrac,15);   
+                        }else if(180 < subBack && subBack  <= 360){
+                        	clear2 = setInterval(backtrac,9); 
+                        }else{
+                        	clear2 = setInterval(backtrac,3); 
+                        }
+						  
+           	        }
+           	    })
+           }
+           addElementLi();
+
+           //北大jq
+           $(function(){
+           	    $("#secNav2").append("<li id='magic-line2'></li>");
+                var $magicLine = $("#magic-line2");
+                console.log($("#secNav2 .cur2").width())
+                console.log( $("#secNav2 .cur2 a").position().left)
+                $magicLine
+                    .width($("#secNav2 .cur2").width())
+                    .css("left", $("#secNav2 .cur2 a").position().left)
+                    .data("origLeft", $magicLine.position().left)
+                    .data("origWidth", $magicLine.width()); 
+		        $("#secNav2 li").find("a").hover(function() {
+		            $el = $(this);
+		            leftPos2 = $el.position().left;
+		            newWidth2 = $el.parent().width();
+		        
+		        $magicLine.stop().animate({
+		            left: leftPos2,
+		            width: newWidth2
+		        });
+		        }, function() {
+		            $magicLine.stop().animate({
+		                left: $magicLine.data("origLeft"),
+		                width: $magicLine.data("origWidth")
+		            });    
+		        });
+
+	        })
+
+       </script>
+    
+</body>
+</html>
