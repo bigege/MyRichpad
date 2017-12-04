@@ -6,11 +6,11 @@
 	<script src="js/excanvas.js"></script>
 </head>
 <body>
-	<canvas class="process" width="500" height="500" data-process="90"></canvas>
+	<canvas id="process" width="500" height="500" data-process="90"></canvas>
 	<script>
 	    
       window.onload=function(){
-        var c=document.getElementsByClassName('process');
+        var c=document.getElementById('process');
         var cxt=c.getContext('2d');
         var process=c.getAttribute('data-process');
         // 绘制圆
